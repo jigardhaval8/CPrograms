@@ -14,15 +14,16 @@ void printncountlinklist(struct node *headpt, char operation)
     traverse = headpt;
     unsigned int no_of_element=0;
 
-        if(traverse->link==NULL)
+
+        if(traverse==NULL)
+        {
+            printf(" Link List is empty!\n\n");
+        }
+        else if(traverse->link==NULL)
         {
             printf(" This Link List has single node only!\n\n");
             printf("[ %d ]->|*END*|\n",traverse->data);
             no_of_element++;
-        }
-        else if(traverse==NULL)
-        {
-            printf(" Link List is empty!\n\n");
         }
         else
         {
@@ -133,6 +134,39 @@ void deleteNodeAtHead2(struct node **headptr)
     traverse=NULL;
 }
 
+void deletefullList(struct node **headptr)
+{
+    struct node *traverse;
+    traverse = *headptr;
+    while(traverse!=NULL)
+    {
+        traverse = traverse->link;
+        free(traverse);
+        *headptr = traverse;
+    }
+    *headptr=NULL;
+}
+
+void reverseLL(struct node **headptr)
+{
+    struct node *newhead,*ptrL,*ptrR;
+    newhead = *headptr;
+    ptrR = newhead;
+    ptrL = NULL;
+    while(newhead->link!=NULL)
+    {
+        ptrR = newhead->link;
+        newhead->link = ptrL;
+        ptrL=newhead;
+        newhead = ptrR;
+    }
+        newhead->link = ptrL;
+        ptrL=newhead;
+
+    *headptr = ptrL;
+
+}
+
 int main()
     {
         struct node *headptr=(struct node*)malloc(sizeof(struct node));
@@ -172,5 +206,12 @@ int main()
         printncountlinklist(headptr,1);
         deleteNodeAtNthLocation(5, headptr);
         printncountlinklist(headptr,1);
+        reverseLL(&headptr);
+        printncountlinklist(headptr,1);
+        reverseLL(&headptr);
+        printncountlinklist(headptr,1);
+
+        // deletefullList(&headptr);
+        // printncountlinklist(headptr,1);
         return 0;
     }
