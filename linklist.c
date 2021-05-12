@@ -103,6 +103,78 @@ void deleteNodeAtNthLocation(unsigned int location, struct node *headpt)
     free(traverse);
     traverse=NULL;
 }
+void printcircularLL(struct node *tailptr, char operation)
+{
+    struct node *traverse;
+    traverse = tailptr;
+    unsigned int count=0;
+    printf("TAIL");
+    while(traverse->link!=tailptr)
+    {
+        printf("| %d  ->",traverse->data);
+        traverse = traverse->link;
+        count++;
+    }
+    printf("| %d ->->(%d) \n",traverse->data, traverse->link->data);
+    count++;
+
+    if(operation==1)
+    {
+        printf("| # of Elements : %d\n", count);
+    }
+
+}
+
+void addnodeatTailCircularLL(struct node **tailptr, unsigned int ipdata)
+{
+    struct node *traverse, *next;
+    traverse = *tailptr;
+    next = traverse->link;
+    struct node *new=malloc(sizeof(struct node *));
+    new->data=ipdata;
+    new->link=next;
+    traverse->link=new;
+    *tailptr=new;
+}
+
+void addnodeatBegCircularLL(struct node **tailptr, unsigned int ipdata)
+{
+    struct node *traverse, *next;
+    traverse = *tailptr;
+    next = traverse->link;
+    struct node *new=malloc(sizeof(struct node *));
+    new->data=ipdata;
+    new->link=next;
+    traverse->link=new;
+}
+
+void deleteTailNodeCircularLL(struct node **tailptr)
+{
+    struct node *traverse, *next, *prev;
+    traverse = *tailptr;
+    prev = traverse;
+    next = traverse->link;
+    *tailptr = next;
+    while(prev->link!=traverse)
+    {
+        prev = prev->link;
+    }
+    prev->link = next;
+    free(traverse);
+    traverse=NULL;
+}
+
+void deleteFirstNodeCircularLL(struct node **tailptr)
+{
+    struct node *traverse, *next, *next2;
+    traverse = *tailptr;
+    next2 = traverse->link->link;
+    next = traverse->link;
+
+    traverse->link=next2;
+    free(next);
+    next=NULL;
+}
 
 // It will add node at the beginning of link list
 struct node* addNodeAtHead(struct node *headptr, unsigned int value)
@@ -173,10 +245,32 @@ int main()
         headptr->data = 99;
         headptr->link = NULL;
 
-        // struct node *current=(struct node*)malloc(sizeof(struct node));
-        // current->data = 97;
-        // current->link = NULL;
-        // headptr->link = current;
+        struct node *circularlltail=(struct node*)malloc(sizeof(struct node));
+        circularlltail->data = 77;
+        circularlltail->link = circularlltail;
+
+        printcircularLL(circularlltail,1);
+        addnodeatTailCircularLL(&circularlltail, 54);
+        printcircularLL(circularlltail,1);
+
+        addnodeatTailCircularLL(&circularlltail, 4);
+
+        printcircularLL(circularlltail,1);
+        addnodeatBegCircularLL(&circularlltail, 99);
+        addnodeatBegCircularLL(&circularlltail, 97);
+
+        // addnodeatTailCircularLL(&circularlltail, 45);
+        // addnodeatTailCircularLL(&circularlltail, 11);
+
+        printcircularLL(circularlltail,1);
+        deleteTailNodeCircularLL(&circularlltail);
+        printcircularLL(circularlltail,1);
+        deleteFirstNodeCircularLL(&circularlltail);
+        printcircularLL(circularlltail,1);
+        deleteFirstNodeCircularLL(&circularlltail);
+        printcircularLL(circularlltail,1);
+        deleteFirstNodeCircularLL(&circularlltail);
+        printcircularLL(circularlltail,1);
 
         addNodeAtEnd(headptr, 27);
         addNodeAtEnd(headptr, 85);
