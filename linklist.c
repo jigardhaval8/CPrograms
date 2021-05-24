@@ -176,7 +176,7 @@ void deleteFirstNodeCircularLL(struct node **tailptr)
     next=NULL;
 }
 
-// It will add node at the beginning of link list
+// It will add node at the beginning of link list, and will return new head as return value
 struct node* addNodeAtHead(struct node *headptr, unsigned int value)
 {
     struct node *traverse, *prev, *current;
@@ -187,6 +187,8 @@ struct node* addNodeAtHead(struct node *headptr, unsigned int value)
     headptr = current;
     return headptr;
 }
+
+// It will add node at beginning of link list and will update Head
 void addNodeAtHead2(struct node **headptr, unsigned int value)
 {
     struct node *traverse, *prev, *current;
